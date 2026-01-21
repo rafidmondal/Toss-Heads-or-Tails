@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafid Ultimate Toss</title>
+    <style>
+        body {
+            background-color: #000;
+            background-image: linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 0, 80, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            height: 100vh; margin: 0; overflow: hidden;
+        }
+
+        /* --- CONTAINER --- */
+        .game-area {
+            position: relative;
+            width: 100%; height: 600px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: flex-end; /* Bottom alignment */
+            padding-bottom: 50px;
+        }
+
+        /* --- 3D COIN --- */
+        .coin-wrapper {
+            width: 150px; height: 150px;
+            perspective: 1000px;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .coin {
+            width: 100%; height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            /* Default State */
+            transform: rotateY(0deg); 
+        }
+
+        .face {
+            position: absolute; width: 100%; height: 100%;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px; font-weight: bold;
+            backface-visibility: hidden; /* Hide back when rotating */
+            border: 5px solid;
+            box-shadow: 0 0 30px;
+        }
+
+        /* HEADS DESIGN (GOLD) */
+        .heads {
+            background: radial-gradient(circle at 30% 30%, #FFD700, #B8860B);
+            color: #4b3621;
+            border-color: #FFD700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            transform: rotateY(0deg);
+        }
+        .heads::after { content: "HEAD"; }
+
+        /* TAILS DESIGN (CYAN NEON) */
+        .tails {
+            background: radial-gradient(circle at 30% 30%, #00d4ff, #0077be);
+            color: #003344;
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+            transform: rotateY(180deg);
+        }
+        .tails::after { content: "TAIL"; }
+
+        /* --- ANIMATIONS --- */
+        
+        /* 1. Toss HEADS (Go Up, Spin, Land 0deg) */
+        @keyframes toss-heads {
+            0% { transform: translateY(0) rotateY(0); }
+            40% { transform: translateY(-400px) rotateY(900deg) scale(1.2); } /* Up high */
+            100% { transform: translateY(0) rotateY(1800deg); } /* Land on 0 (Heads) */
+        }
+
+        /* 2. Toss TAILS (Go Up, Spin, Land 180deg) */
+        @keyframes toss-tails {
+            0% { transform: translateY(0) rotateY(0); }
+            40% { transform: translateY(-400px) rotateY(900deg) scale(1.2); } /* Up high */
+            100% { transform: translateY(0) rotateY(1980deg); } /* Land on 180 (Tails) */
+        }
+
+        /* Classes to trigger animation */
+        .animate-heads { animation: toss-heads 2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-tails { animation: toss-tails 2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+        /* --- CONTROLS --- */
+        .controls { text-align: center; z-index: 10; }
+        
+        button {
+            padding: 15px 50px; font-size: 20px; font-weight: bold;
+            border-radius: 50px; border: none; cursor: pointer;
+            background: linear-gradient(45deg, #FF1744, #ff0055);
+            color: white; box-shadow: 0 0 20px #FF1744;
+            transition: 0.2s;
+        }
+        button:active { transform: scale(0.95); box-shadow: 0 0 10px #FF1744; }
+        button:disabled { background: #333; box-shadow: none; cursor: not-allowed; color: #777; }
+
+        #status {
+            margin-top: 20px; font-size: 25px; font-weight: bold; height: 30px;
+            letter-spacing: 2px; text-shadow: 0 0 10px currentColor;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-area">
+    <div class="coin-wrapper">
+        <div class="coin" id="coin">
+            <div class="face heads"></div>
+            <div class="face tails"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="toss-btn" onclick="tossCoin()">TOSS UP ⬆</button>
+        <div id="status"></div>
+    </div>
+</div>
+
+<script>
+    const coin = document.getElementById('coin');
+    const btn = document.getElementById('toss-btn');
+    const status = document.getElementById('status');
+
+    function tossCoin() {
+        // 1. Reset everything
+        btn.disabled = true;
+        status.innerText = "";
+        coin.classList.remove('animate-heads', 'animate-tails');
+        
+        // Force reflow (Browser reset trick)
+        void coin.offsetWidth;
+
+        // 2. Decide Winner
+        const isHeads = Math.random() < 0.5;
+
+        // 3. Play Animation
+        // কয়েন এখন উপরে উঠে নিচে নামবে
+        if(isHeads) {
+            coin.classList.add('animate-heads');
+        } else {
+            coin.classList.add('animate-tails');
+        }
+
+        // 4. Show Result after animation lands (2 seconds)
+        setTimeout(() => {
+            btn.disabled = false;
+            if(isHeads) {
+                status.innerText = "WINNER: HEADS";
+                status.style.color = "#FFD700";
+            } else {
+                status.innerText = "WINNER: TAILS";
+                status.style.color = "#00d4ff";
+            }
+            
+            // Sound effect (Optional beep)
+            // let audio = new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg');
+            // audio.play().catch(e => console.log(e));
+
+        }, 2000);
+    }
+</script>
+
+</body>
+</html>
