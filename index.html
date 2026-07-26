@@ -906,7 +906,11 @@
     setTimeout(()=>{
       tossBtn.disabled = false;
       playDing();
-      if(navigator.vibrate && state.settings.vibrate) navigator.vibrate(isHeads ? [40] : [20,30,20]);
+      try{
+        if(state.settings.vibrate && navigator.vibrate){
+          navigator.vibrate(isHeads ? 120 : [80,40,80]);
+        }
+      }catch(e){}
 
       const resultChar = isHeads ? 'H' : 'T';
       recordResult(resultChar);
