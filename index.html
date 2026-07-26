@@ -1,181 +1,999 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="04Iccv3ZqlAfU3TeqdRVtJubMmkhUMxA2sDJNxoRLD8" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.png" type="image/png">
-    <title>Flip a Coin - Online Head or Tail Toss Game</title>
-<meta name="description" content="Use this simple online coin flipper to get a random Head or Tail result. Perfect for quick decision-making and fair toss games.">
-<meta name="keywords" content="Flip a coin, Head or Tail, Online Coin Toss, Random Result, Toss Game, Decision Maker Tool">
-    <style>
-        body {
-            background-color: #000;
-            background-image: linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 0, 80, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            height: 100vh; margin: 0; overflow: hidden;
-        }
+<meta name="google-site-verification" content="04Iccv3ZqlAfU3TeqdRVtJubMmkhUMxA2sDJNxoRLD8" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="manifest" href="manifest.json">
+<!-- Primary SEO -->
+<title>Heads or Tails? Flip a Coin Online | Free Random Coin Toss Game</title>
 
-        /* --- CONTAINER --- */
-        .game-area {
-            position: relative;
-            width: 100%; height: 600px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: flex-end; /* Bottom alignment */
-            padding-bottom: 50px;
-        }
+<meta name="description" content="Heads or Tails? Flip a coin online instantly with a fair random coin toss. Free 3D coin flip game featuring head or tail toss, decision maker, streak tracker, statistics, 2-player duel, and virtual betting mode.">
 
-        /* --- 3D COIN --- */
-        .coin-wrapper {
-            width: 150px; height: 150px;
-            perspective: 1000px;
-            position: relative;
-            margin-bottom: 50px;
-        }
+<meta name="keywords" content="heads or tails, head or tail, head and tail, heads and tails, heads tails, head tails, tails or heads, tails or head, flip a coin, flip coin online, coin flip, coin toss, coin toss online, head or tails game, heads or tails game, head tail game, head tail toss, head or tail toss, head or tail coin toss, heads or tails coin toss, head tail coin toss, coin toss heads or tails, random coin flip, random coin toss, coin flipper, coin toss generator, online coin toss, online coin flip, free coin flip, decision maker, random decision maker, 50 50 random generator, 3D coin flip, virtual coin toss, browser game">
 
-        .coin {
-            width: 100%; height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            /* Default State */
-            transform: rotateY(0deg); 
-        }
+<meta name="robots" content="index, follow, max-image-preview:large">
 
-        .face {
-            position: absolute; width: 100%; height: 100%;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 40px; font-weight: bold;
-            backface-visibility: hidden; /* Hide back when rotating */
-            border: 5px solid;
-            box-shadow: 0 0 30px;
-        }
+<link rel="canonical" href="https://toss-heads-or-tails.raxzen.in/">
 
-        /* HEADS DESIGN (GOLD) */
-        .heads {
-            background: radial-gradient(circle at 30% 30%, #FFD700, #B8860B);
-            color: #4b3621;
-            border-color: #FFD700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-            transform: rotateY(0deg);
-        }
-        .heads::after { content: "HEAD"; }
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Heads or Tails? Flip a Coin Online | Free Random Coin Toss Game">
+<meta property="og:description" content="Play a fair random Heads or Tails coin toss online with realistic 3D animation, sound effects, statistics, streak tracking, 2-player duel, and virtual betting mode.">
+<meta property="og:url" content="https://toss-heads-or-tails.raxzen.in/">
+<meta property="og:site_name" content="Heads or Tails">
+<meta property="og:image" content="https://toss-heads-or-tails.raxzen.in/favicon.png">
 
-        /* TAILS DESIGN (CYAN NEON) */
-        .tails {
-            background: radial-gradient(circle at 30% 30%, #00d4ff, #0077be);
-            color: #003344;
-            border-color: #00d4ff;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
-            transform: rotateY(180deg);
-        }
-        .tails::after { content: "TAIL"; }
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Heads or Tails? Flip a Coin Online">
+<meta name="twitter:description" content="Free random Heads or Tails coin toss game with realistic 3D animation, sound, streak tracking, statistics, and multiplayer duel mode.">
+<meta name="twitter:image" content="https://toss-heads-or-tails.raxzen.in/favicon.png">
 
-        /* --- ANIMATIONS --- */
-        
-        /* 1. Toss HEADS (Go Up, Spin, Land 0deg) */
-        @keyframes toss-heads {
-            0% { transform: translateY(0) rotateY(0); }
-            40% { transform: translateY(-400px) rotateY(900deg) scale(1.2); } /* Up high */
-            100% { transform: translateY(0) rotateY(1800deg); } /* Land on 0 (Heads) */
-        }
+<!-- Extra SEO -->
+<meta name="author" content="Raxzen">
+<meta name="application-name" content="Heads or Tails">
+<meta name="apple-mobile-web-app-title" content="Heads or Tails">
 
-        /* 2. Toss TAILS (Go Up, Spin, Land 180deg) */
-        @keyframes toss-tails {
-            0% { transform: translateY(0) rotateY(0); }
-            40% { transform: translateY(-400px) rotateY(900deg) scale(1.2); } /* Up high */
-            100% { transform: translateY(0) rotateY(1980deg); } /* Land on 180 (Tails) */
-        }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Heads or Tails - Flip a Coin Online",
+  "url": "https://toss-heads-or-tails.raxzen.in/",
+  "description": "Heads or Tails? Flip a coin online instantly with a fair random coin toss. Free 3D coin flip game featuring head or tail toss, decision maker, streak tracker, statistics, 2-player duel, and virtual betting mode.",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "image": "https://toss-heads-or-tails.raxzen.in/favicon.png",
+  "author": { "@type": "Organization", "name": "Raxzen" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this coin toss truly random?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, every flip uses a fair 50/50 random result, just like a real coin toss." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this for a cricket toss or classroom decision?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, it works great as a quick decision maker for cricket toss, classroom activities, games, or any 50/50 choice." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Heads or Tails free to play?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is completely free to play with no download required." }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --font-display:'Orbitron', 'Segoe UI', sans-serif;
+    --font-body:'Segoe UI', sans-serif;
+  }
 
-        /* Classes to trigger animation */
-        .animate-heads { animation: toss-heads 2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-        .animate-tails { animation: toss-tails 2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+  body[data-theme="neon"]{
+    --bg:#000;
+    --grid-a: rgba(0,255,255,0.05);
+    --grid-b: rgba(255,0,80,0.05);
+    --text:#fff;
+    --panel-bg: rgba(255,255,255,0.05);
+    --panel-border: rgba(255,255,255,0.14);
+    --heads-1:#FFD700; --heads-2:#B8860B; --heads-text:#4b3621; --heads-glow: rgba(255,215,0,0.6);
+    --tails-1:#00d4ff; --tails-2:#0077be; --tails-text:#003344; --tails-glow: rgba(0,212,255,0.6);
+    --btn-1:#FF1744; --btn-2:#ff0055; --btn-glow:#FF1744;
+    --accent:#00d4ff;
+  }
+  body[data-theme="classic"]{
+    --bg:#0b1f14;
+    --grid-a: rgba(255,215,0,0.04);
+    --grid-b: rgba(255,255,255,0.03);
+    --text:#f3ead1;
+    --panel-bg: rgba(0,0,0,0.3);
+    --panel-border: rgba(212,175,55,0.4);
+    --heads-1:#f3d27a; --heads-2:#a97c1f; --heads-text:#3a2a08; --heads-glow: rgba(243,210,122,0.45);
+    --tails-1:#d9d9d9; --tails-2:#8a8a8a; --tails-text:#2a2a2a; --tails-glow: rgba(217,217,217,0.4);
+    --btn-1:#a97c1f; --btn-2:#d4af37; --btn-glow:#d4af37;
+    --accent:#d4af37;
+  }
+  body[data-theme="glass"]{
+    --bg:#0a0e17;
+    --grid-a: rgba(120,180,255,0.05);
+    --grid-b: rgba(120,180,255,0.03);
+    --text:#eaf2ff;
+    --panel-bg: rgba(255,255,255,0.08);
+    --panel-border: rgba(255,255,255,0.2);
+    --heads-1: rgba(255,255,255,0.85); --heads-2: rgba(160,190,255,0.5); --heads-text:#1a2233; --heads-glow: rgba(200,220,255,0.55);
+    --tails-1: rgba(150,210,255,0.75); --tails-2: rgba(80,120,200,0.55); --tails-text:#0d1a2b; --tails-glow: rgba(120,190,255,0.55);
+    --btn-1:#4f8dfd; --btn-2:#8ec7ff; --btn-glow:#4f8dfd;
+    --accent:#8ec7ff;
+  }
+  body[data-theme="rupee"]{
+    --bg:#0e1108;
+    --grid-a: rgba(255,153,51,0.05);
+    --grid-b: rgba(19,136,8,0.05);
+    --text:#fdf6e3;
+    --panel-bg: rgba(255,255,255,0.05);
+    --panel-border: rgba(255,153,51,0.35);
+    --heads-1:#e6e6e6; --heads-2:#9a9a9a; --heads-text:#1a1a1a; --heads-glow: rgba(230,230,230,0.4);
+    --tails-1:#e6e6e6; --tails-2:#9a9a9a; --tails-text:#1a1a1a; --tails-glow: rgba(230,230,230,0.4);
+    --btn-1:#FF9933; --btn-2:#138808; --btn-glow:#FF9933;
+    --accent:#FF9933;
+  }
 
-        /* --- CONTROLS --- */
-        .controls { text-align: center; z-index: 10; }
-        
-        button {
-            padding: 15px 50px; font-size: 20px; font-weight: bold;
-            border-radius: 50px; border: none; cursor: pointer;
-            background: linear-gradient(45deg, #FF1744, #ff0055);
-            color: white; box-shadow: 0 0 20px #FF1744;
-            transition: 0.2s;
-        }
-        button:active { transform: scale(0.95); box-shadow: 0 0 10px #FF1744; }
-        button:disabled { background: #333; box-shadow: none; cursor: not-allowed; color: #777; }
+  *{box-sizing:border-box;}
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  html, body{ height:100%; }
+  body{
+    background-color: var(--bg);
+    background-image: linear-gradient(var(--grid-a) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--grid-b) 1px, transparent 1px);
+    background-size: 40px 40px;
+    color: var(--text);
+    font-family: var(--font-body);
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100vh; width:100vw; margin:0; padding:0; overflow-x:hidden; overflow-y:auto;
+    position:relative;
+    transition: background-color .4s ease;
+  }
 
-        #status {
-            margin-top: 20px; font-size: 25px; font-weight: bold; height: 30px;
-            letter-spacing: 2px; text-shadow: 0 0 10px currentColor;
-        }
-    </style>
+  .brand{
+    position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    font-family: var(--font-display); font-size:13px; letter-spacing:3px;
+    text-transform:uppercase; opacity:.55; text-shadow: 0 0 10px var(--accent);
+    z-index:6; pointer-events:none;
+  }
+
+  .top-share{
+    all:unset; cursor:pointer; position:absolute; top:12px; right:14px; z-index:16;
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, var(--btn-1), var(--btn-2));
+    border:1px solid rgba(255,255,255,0.25); color:#fff;
+    box-shadow: 0 0 14px var(--btn-glow), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition:.2s;
+  }
+  .top-share:hover{ transform: scale(1.08); box-shadow: 0 0 20px var(--btn-glow), inset 0 1px 0 rgba(255,255,255,0.35); }
+  .top-share:active{ transform: scale(.94); }
+  .top-share svg{ width:15px; height:15px; }
+
+  .rail{
+    position:fixed; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:18px; z-index:15;
+  }
+  .rail.left{ left:16px; }
+  .rail.right{ right:16px; }
+  .rail button{
+    all:unset; cursor:pointer; width:50px; height:50px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--panel-bg); border:1px solid var(--panel-border);
+    color: var(--text); opacity:.6; transition:.2s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(6px);
+  }
+  .rail button svg{ width:21px; height:21px; display:block; }
+  .rail button.active{ opacity:1; color: var(--accent); border-color: var(--accent); box-shadow:0 0 16px var(--accent); }
+  .rail button:active{ transform:scale(.92); }
+
+  .game-area{ position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; width:100%; transform: translateY(10vh); }
+
+  .coin-wrapper{ width:150px; height:150px; perspective:1000px; position:relative; margin-bottom:26px; }
+  .coin{ width:100%; height:100%; position:absolute; transform-style:preserve-3d; transform:rotateY(0deg); }
+  .face{
+    position:absolute; width:100%; height:100%; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    font-size:32px; font-weight:bold; font-family: var(--font-display);
+    backface-visibility:hidden; border:5px solid; box-shadow:0 0 30px;
+  }
+  .face .sub{ font-size:11px; opacity:.7; margin-top:2px; letter-spacing:1px; }
+  .heads{
+    background: radial-gradient(circle at 30% 30%, var(--heads-1), var(--heads-2));
+    color: var(--heads-text); border-color: var(--heads-1);
+    box-shadow: 0 0 30px var(--heads-glow); transform: rotateY(0deg);
+  }
+  .heads::after{ content:"HEAD"; }
+  .tails{
+    background: radial-gradient(circle at 30% 30%, var(--tails-1), var(--tails-2));
+    color: var(--tails-text); border-color: var(--tails-1);
+    box-shadow: 0 0 30px var(--tails-glow); transform: rotateY(180deg);
+  }
+  .tails::after{ content:"TAIL"; }
+  body[data-theme="rupee"] .heads::after{ content:"₹ HEAD"; }
+  body[data-theme="rupee"] .tails::after{ content:"₹ TAIL"; }
+
+  @keyframes toss-heads{
+    0%{ transform: translateY(0) rotateY(0); }
+    40%{ transform: translateY(-260px) rotateY(var(--spin,900deg)) scale(1.2); }
+    100%{ transform: translateY(0) rotateY(1800deg); }
+  }
+  @keyframes toss-tails{
+    0%{ transform: translateY(0) rotateY(0); }
+    40%{ transform: translateY(-260px) rotateY(var(--spin,900deg)) scale(1.2); }
+    100%{ transform: translateY(0) rotateY(1980deg); }
+  }
+  .animate-heads{ animation: toss-heads var(--dur,2s) cubic-bezier(0.25,1,0.5,1) forwards; }
+  .animate-tails{ animation: toss-tails var(--dur,2s) cubic-bezier(0.25,1,0.5,1) forwards; }
+
+  .controls{ text-align:center; z-index:10; }
+  button.primary{
+    padding:15px 46px; font-size:18px; font-weight:bold; font-family: var(--font-display);
+    border-radius:50px; border:none; cursor:pointer; letter-spacing:1px;
+    background: linear-gradient(45deg, var(--btn-1), var(--btn-2));
+    color:white; box-shadow:0 0 20px var(--btn-glow); transition:.2s;
+  }
+  button.primary:active{ transform:scale(.95); box-shadow:0 0 10px var(--btn-glow); }
+  button.primary:disabled{ background:#333; box-shadow:none; cursor:not-allowed; color:#777; }
+
+  #status{ margin-top:18px; font-size:22px; font-weight:bold; height:28px; letter-spacing:2px; text-shadow:0 0 10px currentColor; font-family: var(--font-display); }
+
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)), var(--panel-bg);
+    border:1px solid var(--panel-border); border-radius:20px;
+    padding:16px 18px; margin-bottom:18px; font-size:13.5px;
+    width: min(340px, calc(100vw - 156px));
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    position:relative; z-index:8;
+  }
+  .panel-head{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; }
+  .panel h3{ margin:0; flex:1; min-width:0; font-family:var(--font-display); font-size:11px; letter-spacing:1px; line-height:1.4; color:var(--accent); }
+  .panel-close{
+    all:unset; cursor:pointer; width:26px; height:26px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:12px;
+    background: rgba(255,255,255,0.08); border:1px solid var(--panel-border); color:var(--text); opacity:.8;
+  }
+  .panel-close:hover{ opacity:1; border-color: var(--accent); }
+  .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:8px; flex-wrap:wrap; row-gap:8px; }
+  .pill{ background: rgba(255,255,255,0.09); padding:5px 12px; border-radius:20px; font-size:12.5px; letter-spacing:.3px; }
+  .stepper{ display:flex; align-items:center; gap:7px; }
+  .stepper button{ all:unset; cursor:pointer; width:28px; height:28px; text-align:center; line-height:28px; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:9px; }
+  select, input[type=number]{
+    background: rgba(255,255,255,0.09); color:var(--text); border:1px solid var(--panel-border);
+    border-radius:9px; padding:6px 9px; font-size:13px;
+  }
+  button.ghost{
+    all:unset; cursor:pointer; padding:9px 16px; border-radius:12px; font-size:12.5px; font-weight:600;
+    background: var(--panel-bg); border:1px solid var(--panel-border); color:var(--text); margin: 3px;
+    transition:.2s;
+  }
+  button.ghost:hover{ border-color: var(--accent); color: var(--accent); }
+  .btn-row{ display:flex; gap:7px; flex-wrap:wrap; justify-content:center; margin-top:6px; }
+
+  .modal-backdrop{
+    position:fixed; inset:0; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px);
+    display:flex; align-items:center; justify-content:center; z-index:30;
+  }
+  .modal-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0)), var(--bg);
+    border:1px solid var(--panel-border); border-radius:26px;
+    padding:28px 24px; width:90%; max-width:400px; max-height:82vh; overflow-y:auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .modal-head h2{ font-family:var(--font-display); font-size:17px; letter-spacing:2px; margin:0; color:var(--accent); }
+  .modal-close{ all:unset; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--panel-bg); border:1px solid var(--panel-border); transition:.2s; }
+  .modal-close:hover{ border-color: var(--accent); color: var(--accent); }
+  .modal-close svg{ width:14px; height:14px; }
+
+  .stat-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:8px; margin-bottom:12px; width:100%; }
+  .stat-card{ background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:12px; padding:8px; text-align:center; }
+  .stat-card .num{ font-family:var(--font-display); font-size:18px; }
+  .stat-card .lbl{ font-size:9px; opacity:.6; text-transform:uppercase; letter-spacing:1px; }
+  .history-bar{ display:flex; gap:4px; flex-wrap:wrap; margin-bottom:12px; }
+  .history-dot{ width:17px; height:17px; border-radius:50%; font-size:8px; display:flex; align-items:center; justify-content:center; font-weight:bold; }
+  .history-dot.H{ background: var(--heads-1); color: var(--heads-text); }
+  .history-dot.T{ background: var(--tails-1); color: var(--tails-text); }
+
+  .theme-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:8px; margin-top:8px; }
+  .theme-swatch{ border-radius:10px; padding:10px 4px; text-align:center; font-size:10px; cursor:pointer; border:2px solid transparent; }
+  .theme-swatch.active{ border-color: var(--accent); }
+  .toggle-row{ display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--panel-border); font-size:13px; }
+  .toggle-row:last-child{ border-bottom:none; }
+  .switch{ position:relative; width:42px; height:24px; flex-shrink:0; }
+  .switch input{ opacity:0; width:0; height:0; }
+  .slider{ position:absolute; cursor:pointer; inset:0; background:rgba(255,255,255,0.15); border-radius:24px; transition:.2s; }
+  .slider:before{ content:""; position:absolute; height:18px; width:18px; left:3px; top:3px; background:white; border-radius:50%; transition:.2s; }
+  .switch input:checked + .slider{ background: var(--accent); }
+  .switch input:checked + .slider:before{ transform: translateX(18px); }
+
+  .hidden{ display:none !important; }
+
+  #particle-canvas{ position:fixed; inset:0; pointer-events:none; z-index:5; }
+
+  #toast{
+    position:fixed; bottom:70px; left:50%; transform:translateX(-50%);
+    background: rgba(20,20,20,0.95); border:1px solid var(--panel-border); color:var(--text);
+    padding:9px 16px; border-radius:10px; font-size:12px; opacity:0; transition:opacity .3s; z-index:40;
+    white-space:nowrap;
+  }
+  #toast.show{ opacity:1; }
+
+  #ad-wrap{ position:relative; width:100%; margin-top:0; padding:10px 0 40px; display:flex; align-items:center; justify-content:center; z-index:4; }
+
+  @media (max-width:360px){
+    .rail button{ width:40px; height:40px; font-size:16px; }
+    .coin-wrapper{ width:130px; height:130px; }
+  }
+
+  /* ================= COIN SKIN GALLERY ================= */
+  .skin-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:6px; }
+  .skin-swatch{
+    display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer;
+    padding:8px 4px; border-radius:14px; border:2px solid transparent; transition:.2s;
+  }
+  .skin-swatch.active{ border-color: var(--accent); background: rgba(255,255,255,0.05); }
+  .skin-preview{
+    width:44px; height:44px; border-radius:50%; border:2px solid rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .skin-name{ font-size:9.5px; text-align:center; opacity:.8; letter-spacing:.2px; line-height:1.2; }
+
+  /* ---- Simple var-based metal skins (heads/tails colors only) ---- */
+  body[data-skin="classic-gold"]{ --heads-1:#FFD700; --heads-2:#B8860B; --heads-text:#4b3621; --heads-glow:rgba(255,215,0,.6); --tails-1:#E8B923; --tails-2:#8B6508; --tails-text:#4b3621; --tails-glow:rgba(232,185,35,.6); }
+  body[data-skin="bronze"]{ --heads-1:#CD7F32; --heads-2:#8B5A2B; --heads-text:#2e1c0d; --heads-glow:rgba(205,127,50,.55); --tails-1:#B87333; --tails-2:#6E4423; --tails-text:#2e1c0d; --tails-glow:rgba(184,115,51,.55); }
+  body[data-skin="emerald"]{ --heads-1:#34d399; --heads-2:#065f46; --heads-text:#022c22; --heads-glow:rgba(52,211,153,.55); --tails-1:#6ee7b7; --tails-2:#047857; --tails-text:#022c22; --tails-glow:rgba(110,231,183,.55); }
+  body[data-skin="ruby"]{ --heads-1:#f43f5e; --heads-2:#7f1d1d; --heads-text:#3f0d10; --heads-glow:rgba(244,63,94,.55); --tails-1:#fb7185; --tails-2:#9f1239; --tails-text:#3f0d10; --tails-glow:rgba(251,113,133,.55); }
+  body[data-skin="luxury-gold"]{ --heads-1:#fff2c2; --heads-2:#caa53d; --heads-text:#4b3b0c; --heads-glow:rgba(255,225,150,.75); --tails-1:#f6d776; --tails-2:#a9822c; --tails-text:#4b3b0c; --tails-glow:rgba(246,215,118,.7); }
+
+  /* ---- Fancy full-background skins ---- */
+  body[data-skin="holographic"] .heads{ background: conic-gradient(from 180deg, #ff9ffc, #7afcff, #fff27a, #ff9ffc); box-shadow:0 0 30px rgba(255,255,255,.65); color:#241a33; }
+  body[data-skin="holographic"] .tails{ background: conic-gradient(from 0deg, #7afcff, #ff9ffc, #b6ff7a, #7afcff); box-shadow:0 0 30px rgba(255,255,255,.65); color:#241a33; }
+
+  body[data-skin="galaxy"] .heads{ background: radial-gradient(circle at 30% 25%, #4c1d95, #0b0b2e 75%); box-shadow:0 0 30px rgba(129,140,248,.65); color:#e0e7ff; }
+  body[data-skin="galaxy"] .tails{ background: radial-gradient(circle at 65% 65%, #1e1b4b, #05050f 75%); box-shadow:0 0 30px rgba(129,140,248,.6); color:#e0e7ff; }
+
+  body[data-skin="lava"] .heads{ background: radial-gradient(circle at 30% 30%, #ffb238, #7a0c02 80%); box-shadow:0 0 32px rgba(255,90,0,.75); color:#3a0a00; }
+  body[data-skin="lava"] .tails{ background: radial-gradient(circle at 30% 30%, #ff5400, #3d0700 80%); box-shadow:0 0 32px rgba(255,60,0,.75); color:#fde8d8; }
+
+  body[data-skin="ice"] .heads{ background: radial-gradient(circle at 30% 30%, #eafcff, #7fd8e8 75%); box-shadow:0 0 30px rgba(180,240,255,.7); color:#013848; }
+  body[data-skin="ice"] .tails{ background: radial-gradient(circle at 30% 30%, #bdeeff, #4fb8d6 75%); box-shadow:0 0 30px rgba(150,220,255,.7); color:#013848; }
+
+  body[data-skin="electric"] .heads{ background: radial-gradient(circle at 30% 30%, #f4ff81, #7dff00 75%); box-shadow:0 0 32px rgba(190,255,0,.85); color:#1a2b00; }
+  body[data-skin="electric"] .tails{ background: radial-gradient(circle at 30% 30%, #d0ff00, #3fae00 75%); box-shadow:0 0 32px rgba(160,255,0,.85); color:#0f1c00; }
+
+  body[data-skin="moon"] .heads{ background: radial-gradient(circle at 35% 30%, #fbfbfb, #9a9a9a 78%); box-shadow:0 0 28px rgba(220,220,220,.6); color:#2a2a2a; }
+  body[data-skin="moon"] .tails{ background: radial-gradient(circle at 35% 30%, #d8d8d8, #6b6b6b 78%); box-shadow:0 0 28px rgba(200,200,200,.6); color:#1a1a1a; }
+
+  body[data-skin="sun"] .heads{ background: radial-gradient(circle at 30% 30%, #fff35c, #ff8c00 78%); box-shadow:0 0 36px rgba(255,180,0,.85); color:#5a2b00; }
+  body[data-skin="sun"] .tails{ background: radial-gradient(circle at 30% 30%, #ffde59, #ff6a00 78%); box-shadow:0 0 36px rgba(255,140,0,.85); color:#5a2b00; }
+
+
+  body[data-skin="medal"] .heads{ background: radial-gradient(circle at 30% 30%, #fff6c8, #caa53d 78%); box-shadow:0 0 30px rgba(255,223,120,.7); color:#4b3b0c; border-color:#e8c766 !important; }
+  body[data-skin="medal"] .tails{ background: radial-gradient(circle at 30% 30%, #f6e6b0, #9c7c26 78%); box-shadow:0 0 30px rgba(255,223,120,.6); color:#4b3b0c; border-color:#e8c766 !important; }
+
+  body[data-skin="shield"] .heads{ background: radial-gradient(circle at 30% 30%, #cbd5e1, #334155 82%); box-shadow:0 0 26px rgba(148,163,184,.55); color:#e2e8f0; }
+  body[data-skin="shield"] .tails{ background: radial-gradient(circle at 30% 30%, #94a3b8, #1e293b 82%); box-shadow:0 0 26px rgba(148,163,184,.5); color:#e2e8f0; }
+
+  body[data-skin="lucky-token"] .heads{ background: radial-gradient(circle, #fff 8%, #1d4ed8 10%, #1d4ed8 30%, #fff 32%, #3b82f6 55%, #1e3a8a 100%); box-shadow:0 0 28px rgba(59,130,246,.6); color:#fff; }
+  body[data-skin="lucky-token"] .tails{ background: radial-gradient(circle, #fff 8%, #0f172a 10%, #0f172a 30%, #fff 32%, #1e3a8a 55%, #1e40af 100%); box-shadow:0 0 28px rgba(59,130,246,.55); color:#fff; }
+
+  body[data-skin="metallic"] .heads{ background: repeating-linear-gradient(100deg, #eef1f5 0 3px, #cbd5e1 3px 6px); box-shadow:0 0 20px rgba(200,200,200,.45); color:#1f2937; }
+  body[data-skin="metallic"] .tails{ background: repeating-linear-gradient(80deg, #e2e8f0 0 3px, #94a3b8 3px 6px); box-shadow:0 0 20px rgba(180,180,180,.45); color:#1f2937; }
+
+  body[data-skin="diamond"] .heads{ background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(180,220,255,.35) 55%, rgba(255,255,255,.8)); box-shadow:0 0 30px rgba(255,255,255,.65); color:#1a2233; }
+  body[data-skin="diamond"] .tails{ background: linear-gradient(135deg, rgba(220,240,255,.9), rgba(150,190,230,.4) 55%, rgba(255,255,255,.75)); box-shadow:0 0 30px rgba(220,240,255,.6); color:#1a2233; }
+
+  body[data-skin="crystal"] .heads{ background: linear-gradient(135deg, #d1c4e9, #5e35b1 75%); box-shadow:0 0 28px rgba(179,157,219,.6); color:#f3f0fa; }
+  body[data-skin="crystal"] .tails{ background: linear-gradient(135deg, #b39ddb, #4527a0 75%); box-shadow:0 0 28px rgba(179,157,219,.55); color:#f3f0fa; }
+
+  body[data-skin="titanium"] .heads{ background: linear-gradient(135deg, #6b7280, #111827 75%); box-shadow:0 0 22px rgba(120,120,120,.5); color:#e5e7eb; }
+  body[data-skin="titanium"] .tails{ background: linear-gradient(135deg, #4b5563, #030712 75%); box-shadow:0 0 22px rgba(100,100,100,.5); color:#e5e7eb; }
+
+  body[data-skin="rupee5"] .heads{ background: radial-gradient(circle at 50% 50%, #e8e8e8 0 55%, #b8860b 56% 100%); box-shadow:0 0 26px rgba(200,200,200,.55); color:#1a1a1a; }
+  body[data-skin="rupee5"] .tails{ background: radial-gradient(circle at 50% 50%, #e8e8e8 0 55%, #b8860b 56% 100%); box-shadow:0 0 26px rgba(200,200,200,.55); color:#1a1a1a; }
+</style>
 </head>
-<body>
+<body data-theme="classic" data-skin="default">
 
-<div class="game-area">
-    <div class="coin-wrapper">
-        <div class="coin" id="coin">
-            <div class="face heads"></div>
-            <div class="face tails"></div>
-        </div>
-    </div>
+<h1 class="sr-only">Heads or Tails? Flip a Coin Online – Free Random Coin Toss Game</h1>
+<p class="sr-only">Heads or Tails? Flip a Coin Online is a free random coin toss game that lets you instantly choose between head or tail with a fair 50/50 random result. Whether you need a quick decision maker, a head or tail toss, a coin flip for games, cricket toss, classroom activities, or just for fun, this online coin flipper delivers fast, accurate, and realistic results. Enjoy smooth 3D animation, sound effects, streak tracking, statistics, multiplayer duel mode, and virtual betting—all completely free with no download required.</p>
 
-    <div class="controls">
-        <button id="toss-btn" onclick="tossCoin()">TOSS UP ⬆</button>
-        <div id="status"></div>
-    </div>
+<canvas id="particle-canvas"></canvas>
+<div class="brand">🪙 Flip a Coin</div>
+<button class="top-share" id="top-share-btn" title="Share">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+</button>
+
+<div class="rail left">
+  <button id="open-stats" title="Stats">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="4" y2="12"/><line x1="12" y1="20" x2="12" y2="5"/><line x1="20" y1="20" x2="20" y2="14"/></svg>
+  </button>
+  <button id="open-settings" title="Settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+  <button id="open-skins" title="Coin Skins">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-4-4 3 3 0 0 1 1-2.24A10 10 0 0 0 12 2z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="11" cy="7" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="9" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15" r="1.2" fill="currentColor" stroke="none"/></svg>
+  </button>
 </div>
 
+<div class="rail right">
+  <button data-mode="solo" class="active" title="Solo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
+  </button>
+  <button data-mode="duel" title="2-Player Duel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  </button>
+  <button data-mode="bet" title="Betting">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>
+  </button>
+</div>
+
+<div class="game-area">
+
+  <div class="panel hidden" id="duel-panel">
+    <div class="panel-head">
+      <h3>DUEL · P1 HEADS / P2 TAILS</h3>
+      <button class="panel-close" data-close-mode title="Back to Solo">✕</button>
+    </div>
+    <div class="row">
+      <span>Best of</span>
+      <select id="duel-length">
+        <option value="3">3</option>
+        <option value="5" selected>5</option>
+        <option value="7">7</option>
+      </select>
+    </div>
+    <div class="row" style="justify-content:center;">
+      <span class="pill" id="duel-p1">P1: 0</span>
+      <span class="pill" id="duel-round">Round 1</span>
+      <span class="pill" id="duel-p2">P2: 0</span>
+    </div>
+    <div class="btn-row"><button class="ghost" id="duel-reset">Reset Match</button></div>
+  </div>
+
+  <div class="panel hidden" id="bet-panel">
+    <div class="panel-head">
+      <h3>VIRTUAL BETTING</h3>
+      <button class="panel-close" data-close-mode title="Back to Solo">✕</button>
+    </div>
+    <div class="row"><span>Wallet</span><span class="pill" id="wallet-amount">🪙 1000</span></div>
+    <div class="row">
+      <span>Bet</span>
+      <div class="stepper">
+        <button id="bet-minus">−</button>
+        <input type="number" id="bet-amount" value="50" min="1" style="width:62px;text-align:center;">
+        <button id="bet-plus">+</button>
+      </div>
+    </div>
+    <div class="row" style="flex-direction:column; align-items:stretch; gap:8px;">
+      <span id="bet-pick-display" style="text-align:center;">Pick a side:</span>
+      <div class="btn-row" style="margin:0;">
+        <button class="ghost" id="pick-heads">Heads</button>
+        <button class="ghost" id="pick-tails">Tails</button>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="ghost" id="double-or-nothing">Double or Nothing</button>
+      <button class="ghost" id="wallet-reset">Reset Wallet</button>
+    </div>
+  </div>
+
+  <div class="coin-wrapper">
+    <div class="coin" id="coin">
+      <div class="face heads"><div class="sub" id="heads-sub"></div></div>
+      <div class="face tails"><div class="sub" id="tails-sub"></div></div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="primary" id="toss-btn">TOSS UP ⬆</button>
+    <div id="status"></div>
+  </div>
+</div>
+
+<div id="ad-wrap">
+  <script>
+    atOptions = {
+      'key' : '0848c2d414445b3ccd1845d798f22d49',
+      'format' : 'iframe',
+      'height' : 50,
+      'width' : 320,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highperformanceformat.com/0848c2d414445b3ccd1845d798f22d49/invoke.js">
+  </script>
+</div>
+
+<div class="modal-backdrop hidden" id="modal-stats">
+  <div class="modal-card">
+    <div class="modal-head"><h2>STATS</h2><button class="modal-close" data-close="modal-stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button></div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num" id="stat-total">0</div><div class="lbl">Tosses</div></div>
+      <div class="stat-card"><div class="num" id="stat-heads">0</div><div class="lbl">Heads</div></div>
+      <div class="stat-card"><div class="num" id="stat-tails">0</div><div class="lbl">Tails</div></div>
+    </div>
+    <div class="stat-grid" style="grid-template-columns:repeat(2,1fr);">
+      <div class="stat-card"><div class="num" id="stat-winpct">0%</div><div class="lbl">Heads Win %</div></div>
+      <div class="stat-card"><div class="num" id="stat-streak">–</div><div class="lbl">Current Streak</div></div>
+    </div>
+    <h3 style="font-family:var(--font-display);font-size:11px;letter-spacing:1px;color:var(--accent);">LAST 20 RESULTS</h3>
+    <div class="history-bar" id="history-bar"></div>
+    <div class="btn-row">
+      <button class="ghost" id="share-btn">Share 📤</button>
+      <button class="ghost" id="copy-btn">Copy 📋</button>
+      <button class="ghost" id="stats-reset">Reset Stats</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop hidden" id="modal-settings">
+  <div class="modal-card">
+    <div class="modal-head"><h2>SETTINGS</h2><button class="modal-close" data-close="modal-settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button></div>
+    <h3 style="font-family:var(--font-display);font-size:11px;letter-spacing:1px;color:var(--accent);">THEME</h3>
+    <div class="theme-grid">
+      <div class="theme-swatch" data-theme="neon" style="background:#111;color:#0ff;">Neon</div>
+      <div class="theme-swatch active" data-theme="classic" style="background:#123;color:#f3d27a;">Classic</div>
+      <div class="theme-swatch" data-theme="glass" style="background:#223;color:#8ec7ff;">Glass</div>
+      <div class="theme-swatch" data-theme="rupee" style="background:#122;color:#FF9933;">Rupee ₹</div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="toggle-row"><span>Sound effects</span>
+        <label class="switch"><input type="checkbox" id="toggle-sound" checked><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row"><span>Vibration on landing</span>
+        <label class="switch"><input type="checkbox" id="toggle-vibrate" checked><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row"><span>Particle burst effect</span>
+        <label class="switch"><input type="checkbox" id="toggle-particles" checked><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row"><span>Hide ad banner</span>
+        <label class="switch"><input type="checkbox" id="toggle-ads"><span class="slider"></span></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop hidden" id="modal-skins">
+  <div class="modal-card">
+    <div class="modal-head"><h2>COIN SKINS</h2><button class="modal-close" data-close="modal-skins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg></button></div>
+    <div class="skin-grid" id="skin-grid"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
-    const coin = document.getElementById('coin');
-    const btn = document.getElementById('toss-btn');
-    const status = document.getElementById('status');
+(function(){
+  "use strict";
 
-    function tossCoin() {
-        // 1. Reset everything
-        btn.disabled = true;
-        status.innerText = "";
-        coin.classList.remove('animate-heads', 'animate-tails');
-        
-        // Force reflow (Browser reset trick)
-        void coin.offsetWidth;
+  const DEFAULT_STATE = {
+    stats: { total:0, heads:0, tails:0, history:[], streakType:null, streakCount:0 },
+    wallet: { coins: 1000, lastBet: 50, pick: null },
+    duel: { p1:0, p2:0, round:1, length:5, active:true },
+    settings: { theme:'classic', sound:true, vibrate:true, particles:true, adsHidden:false, coinSkin:'default' },
+    mode: 'solo'
+  };
 
-        // 2. Decide Winner
-        const isHeads = Math.random() < 0.5;
+  function loadState(){
+    try{
+      const raw = localStorage.getItem('coinflip_state_v1');
+      if(!raw) return structuredCloneSafe(DEFAULT_STATE);
+      const parsed = JSON.parse(raw);
+      return Object.assign(structuredCloneSafe(DEFAULT_STATE), parsed, {
+        stats: Object.assign(structuredCloneSafe(DEFAULT_STATE.stats), parsed.stats || {}),
+        wallet: Object.assign(structuredCloneSafe(DEFAULT_STATE.wallet), parsed.wallet || {}),
+        duel: Object.assign(structuredCloneSafe(DEFAULT_STATE.duel), parsed.duel || {}),
+        settings: Object.assign(structuredCloneSafe(DEFAULT_STATE.settings), parsed.settings || {})
+      });
+    }catch(e){ return structuredCloneSafe(DEFAULT_STATE); }
+  }
+  function structuredCloneSafe(o){ return JSON.parse(JSON.stringify(o)); }
+  function saveState(){ localStorage.setItem('coinflip_state_v1', JSON.stringify(state)); }
 
-        // 3. Play Animation
-        // কয়েন এখন উপরে উঠে নিচে নামবে
-        if(isHeads) {
-            coin.classList.add('animate-heads');
-        } else {
-            coin.classList.add('animate-tails');
-        }
+  let state = loadState();
 
-        // 4. Show Result after animation lands (2 seconds)
-        setTimeout(() => {
-            btn.disabled = false;
-            if(isHeads) {
-                status.innerText = "WINNER: HEADS";
-                status.style.color = "#FFD700";
-            } else {
-                status.innerText = "WINNER: TAILS";
-                status.style.color = "#00d4ff";
-            }
-            
-            // Sound effect (Optional beep)
-            // let audio = new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg');
-            // audio.play().catch(e => console.log(e));
+  const $ = sel => document.querySelector(sel);
+  const coin = $('#coin');
+  const tossBtn = $('#toss-btn');
+  const statusEl = $('#status');
+  const body = document.body;
 
-        }, 2000);
+  $('#open-stats').addEventListener('click', ()=>{ renderStats(); $('#modal-stats').classList.remove('hidden'); });
+  $('#open-settings').addEventListener('click', ()=> $('#modal-settings').classList.remove('hidden'));
+  $('#open-skins').addEventListener('click', ()=> $('#modal-skins').classList.remove('hidden'));
+
+  /* ================= COIN SKINS ================= */
+  const SKIN_LIST = [
+    { id:'default',      label:'Original',        emoji:'🪙', c1:'#FFD700', c2:'#00d4ff' },
+    { id:'classic-gold', label:'Classic Gold',    emoji:'🪙', c1:'#FFD700', c2:'#B8860B' },
+    { id:'bronze',       label:'Bronze',          emoji:'🥉', c1:'#CD7F32', c2:'#8B5A2B' },
+    { id:'diamond',      label:'Diamond',         emoji:'💎', c1:'#eaffff', c2:'#9fd4ff' },
+    { id:'crystal',      label:'Crystal',         emoji:'💠', c1:'#d1c4e9', c2:'#5e35b1' },
+    { id:'holographic',  label:'Holographic',     emoji:'🔮', c1:'#ff9ffc', c2:'#7afcff' },
+    { id:'titanium',     label:'Black Titanium',  emoji:'⚫', c1:'#6b7280', c2:'#111827' },
+    { id:'lava',         label:'Lava',            emoji:'🔥', c1:'#ffb238', c2:'#7a0c02' },
+    { id:'ice',          label:'Ice',             emoji:'❄️', c1:'#eafcff', c2:'#7fd8e8' },
+    { id:'galaxy',       label:'Galaxy',          emoji:'🌌', c1:'#4c1d95', c2:'#0b0b2e' },
+    { id:'electric',     label:'Electric',        emoji:'⚡', c1:'#f4ff81', c2:'#7dff00' },
+    { id:'emerald',      label:'Emerald',         emoji:'🌿', c1:'#34d399', c2:'#065f46' },
+    { id:'ruby',         label:'Ruby',            emoji:'❤️', c1:'#f43f5e', c2:'#7f1d1d' },
+    { id:'moon',         label:'Moon',            emoji:'🌙', c1:'#fbfbfb', c2:'#9a9a9a' },
+    { id:'sun',          label:'Sun',             emoji:'☀️', c1:'#fff35c', c2:'#ff8c00' },
+    { id:'luxury-gold',  label:'Luxury Gold',     emoji:'👑', c1:'#fff2c2', c2:'#caa53d' },
+    { id:'lucky-token',  label:'Lucky Token',     emoji:'🧿', c1:'#3b82f6', c2:'#1e3a8a' },
+    { id:'metallic',     label:'Metallic Disc',   emoji:'⚙️', c1:'#eef1f5', c2:'#94a3b8' },
+    { id:'shield',       label:'Medieval Shield', emoji:'🛡️', c1:'#cbd5e1', c2:'#334155' },
+    { id:'medal',        label:'Olympic Medal',   emoji:'🏅', c1:'#fff6c8', c2:'#caa53d' },
+    { id:'rupee5',       label:'Indian ₹5 Coin',  emoji:'🇮🇳', c1:'#e8e8e8', c2:'#b8860b' }
+  ];
+
+  function buildSkinGrid(){
+    const grid = $('#skin-grid'); grid.innerHTML = '';
+    SKIN_LIST.forEach(s=>{
+      const el = document.createElement('div');
+      el.className = 'skin-swatch' + (state.settings.coinSkin === s.id ? ' active' : '');
+      el.dataset.skin = s.id;
+      el.innerHTML = `<div class="skin-preview" style="background:linear-gradient(90deg, ${s.c1} 50%, ${s.c2} 50%);">${s.emoji}</div><div class="skin-name">${s.label}</div>`;
+      el.addEventListener('click', ()=> applySkin(s.id, s.emoji));
+      grid.appendChild(el);
+    });
+  }
+  function applySkin(id, emoji){
+    state.settings.coinSkin = id;
+    body.setAttribute('data-skin', id);
+    document.querySelectorAll('.skin-swatch').forEach(el=> el.classList.toggle('active', el.dataset.skin === id));
+    const sub = emoji && id !== 'default' ? emoji : '';
+    $('#heads-sub').textContent = sub;
+    $('#tails-sub').textContent = sub;
+    saveState();
+    toast('Coin skin: ' + (SKIN_LIST.find(s=>s.id===id)||{label:id}).label);
+  }
+  document.querySelectorAll('[data-close]').forEach(btn=>{
+    btn.addEventListener('click', ()=> $('#'+btn.dataset.close).classList.add('hidden'));
+  });
+  document.querySelectorAll('.modal-backdrop').forEach(m=>{
+    m.addEventListener('click', (e)=>{ if(e.target === m) m.classList.add('hidden'); });
+  });
+
+  document.querySelectorAll('.rail.right button').forEach(btn=>{
+    btn.addEventListener('click', ()=> setMode(btn.dataset.mode));
+  });
+  document.querySelectorAll('[data-close-mode]').forEach(btn=>{
+    btn.addEventListener('click', ()=> setMode('solo'));
+  });
+  function setMode(mode){
+    document.querySelectorAll('.rail.right button').forEach(b=>b.classList.toggle('active', b.dataset.mode === mode));
+    state.mode = mode;
+    saveState();
+    updateModePanels();
+  }
+  function updateModePanels(){
+    $('#duel-panel').classList.toggle('hidden', state.mode !== 'duel');
+    $('#bet-panel').classList.toggle('hidden', state.mode !== 'bet');
+    renderDuel();
+    renderWallet();
+  }
+
+  function applyTheme(t){
+    state.settings.theme = t;
+    body.setAttribute('data-theme', t);
+    document.querySelectorAll('.theme-swatch').forEach(s=>s.classList.toggle('active', s.dataset.theme === t));
+    saveState();
+  }
+  document.querySelectorAll('.theme-swatch').forEach(s=>{
+    s.addEventListener('click', ()=> applyTheme(s.dataset.theme));
+  });
+
+  $('#toggle-sound').addEventListener('change', e=>{ state.settings.sound = e.target.checked; saveState(); });
+  $('#toggle-vibrate').addEventListener('change', e=>{ state.settings.vibrate = e.target.checked; saveState(); });
+  $('#toggle-particles').addEventListener('change', e=>{ state.settings.particles = e.target.checked; saveState(); });
+  $('#toggle-ads').addEventListener('change', e=>{
+    state.settings.adsHidden = e.target.checked;
+    $('#ad-wrap').style.display = e.target.checked ? 'none' : '';
+    saveState();
+  });
+
+  $('#duel-length').addEventListener('change', e=>{
+    state.duel.length = parseInt(e.target.value,10);
+    state.duel.p1=0; state.duel.p2=0; state.duel.round=1; state.duel.active=true;
+    saveState(); renderDuel();
+  });
+  $('#duel-reset').addEventListener('click', ()=>{
+    state.duel.p1=0; state.duel.p2=0; state.duel.round=1; state.duel.active=true;
+    saveState(); renderDuel();
+  });
+  function renderDuel(){
+    $('#duel-p1').textContent = 'P1: ' + state.duel.p1;
+    $('#duel-p2').textContent = 'P2: ' + state.duel.p2;
+    $('#duel-round').textContent = state.duel.active ? ('Round ' + state.duel.round) : 'Match Over';
+    $('#duel-length').value = String(state.duel.length);
+  }
+
+  $('#bet-minus').addEventListener('click', ()=>{
+    const inp = $('#bet-amount'); inp.value = Math.max(1, parseInt(inp.value||1,10) - 10);
+  });
+  $('#bet-plus').addEventListener('click', ()=>{
+    const inp = $('#bet-amount'); inp.value = parseInt(inp.value||1,10) + 10;
+  });
+  $('#pick-heads').addEventListener('click', ()=> setPick('H'));
+  $('#pick-tails').addEventListener('click', ()=> setPick('T'));
+  function setPick(p){
+    state.wallet.pick = p;
+    $('#bet-pick-display').textContent = 'Picked: ' + (p==='H' ? 'Heads' : 'Tails');
+    $('#pick-heads').style.borderColor = p==='H' ? 'var(--accent)' : '';
+    $('#pick-tails').style.borderColor = p==='T' ? 'var(--accent)' : '';
+    saveState();
+  }
+  $('#double-or-nothing').addEventListener('click', ()=>{
+    $('#bet-amount').value = Math.min(state.wallet.coins, (parseInt($('#bet-amount').value,10) || 50) * 2);
+  });
+  $('#wallet-reset').addEventListener('click', ()=>{
+    state.wallet.coins = 1000; saveState(); renderWallet();
+    toast('Wallet reset to 🪙 1000');
+  });
+  function renderWallet(){
+    $('#wallet-amount').textContent = '🪙 ' + state.wallet.coins;
+  }
+
+  let actx = null;
+  function ensureAudio(){ if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return actx; }
+
+  function playWhoosh(duration){
+    if(!state.settings.sound) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(650, ctx.currentTime + duration*0.4);
+    osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + duration);
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + duration);
+  }
+  function playDing(){
+    if(!state.settings.sound) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(900, ctx.currentTime);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.4);
+  }
+  function playChime(){
+    if(!state.settings.sound) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    [660,880,1100].forEach((f,i)=>{
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type='sine'; osc.frequency.setValueAtTime(f, ctx.currentTime + i*0.12);
+      gain.gain.setValueAtTime(0.001, ctx.currentTime + i*0.12);
+      gain.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + i*0.12 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i*0.12 + 0.35);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i*0.12); osc.stop(ctx.currentTime + i*0.12 + 0.4);
+    });
+  }
+
+  const canvas = $('#particle-canvas');
+  const ctx2d = canvas.getContext('2d');
+  function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+  function burstParticles(colorA, colorB){
+    if(!state.settings.particles) return;
+    const cx = canvas.width/2, cy = canvas.height/2 - 40;
+    const particles = [];
+    for(let i=0;i<36;i++){
+      const angle = Math.random()*Math.PI*2;
+      const speed = 2 + Math.random()*5;
+      particles.push({
+        x:cx, y:cy, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed - 2,
+        life:1, color: Math.random() > 0.5 ? colorA : colorB, size: 3+Math.random()*4
+      });
     }
-</script> 
-<script async="async" data-cfasync="false" 
-    src="https://pl28528431.effectivegatecpm.com/a7d13f3761dcf16a61ce46130216e34a/invoke.js"></script>
-<div id="container-a7d13f3761dcf16a61ce46130216e34a"></div>
+    let frame = 0;
+    function step(){
+      ctx2d.clearRect(0,0,canvas.width,canvas.height);
+      frame++;
+      let alive = false;
+      particles.forEach(p=>{
+        if(p.life <= 0) return;
+        alive = true;
+        p.vy += 0.12; p.x += p.vx; p.y += p.vy; p.life -= 0.018;
+        ctx2d.globalAlpha = Math.max(p.life,0);
+        ctx2d.fillStyle = p.color;
+        ctx2d.beginPath(); ctx2d.arc(p.x,p.y,p.size,0,Math.PI*2); ctx2d.fill();
+      });
+      ctx2d.globalAlpha = 1;
+      if(alive && frame < 200) requestAnimationFrame(step);
+      else ctx2d.clearRect(0,0,canvas.width,canvas.height);
+    }
+    requestAnimationFrame(step);
+  }
+
+  let toastTimer;
+  function toast(msg){
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+  }
+
+  function renderStats(){
+    $('#stat-total').textContent = state.stats.total;
+    $('#stat-heads').textContent = state.stats.heads;
+    $('#stat-tails').textContent = state.stats.tails;
+    const pct = state.stats.total ? Math.round((state.stats.heads/state.stats.total)*100) : 0;
+    $('#stat-winpct').textContent = pct + '%';
+    $('#stat-streak').textContent = state.stats.streakType ? (state.stats.streakCount + ' ' + (state.stats.streakType==='H'?'Heads':'Tails')) : '–';
+    const bar = $('#history-bar'); bar.innerHTML = '';
+    state.stats.history.slice(-20).forEach(r=>{
+      const d = document.createElement('div');
+      d.className = 'history-dot ' + r;
+      d.textContent = r;
+      bar.appendChild(d);
+    });
+  }
+
+  function lastResultText(){
+    const h = state.stats.history;
+    const last = h.length ? h[h.length-1] : null;
+    const word = last === 'H' ? 'HEADS' : last === 'T' ? 'TAILS' : 'no toss yet';
+    return h.length
+      ? `I just flipped a coin and got ${word}! 🪙 Total tosses: ${state.stats.total} (Heads ${state.stats.heads} / Tails ${state.stats.tails}). Try it yourself:`
+      : `Flip a coin online — fair, animated, with sound, duels and betting mode. Try it:`;
+  }
+  async function shareCurrent(){
+    const text = lastResultText();
+    if(navigator.share){
+      try{ await navigator.share({ title:'Flip a Coin', text, url: location.href }); }
+      catch(e){ /* user cancelled */ }
+    } else {
+      copyToClipboard(text + ' ' + location.href);
+    }
+  }
+  $('#top-share-btn').addEventListener('click', shareCurrent);
+  $('#share-btn').addEventListener('click', shareCurrent);
+  $('#copy-btn').addEventListener('click', ()=> copyToClipboard(lastResultText() + ' ' + location.href));
+  function copyToClipboard(text){
+    navigator.clipboard?.writeText(text).then(()=> toast('Copied to clipboard ✅'))
+      .catch(()=> toast('Could not copy — select and copy manually'));
+  }
+
+  $('#stats-reset').addEventListener('click', ()=>{
+    state.stats = structuredCloneSafe(DEFAULT_STATE.stats);
+    saveState(); renderStats();
+    toast('Stats reset');
+  });
+
+  tossBtn.addEventListener('click', tossCoin);
+
+  function tossCoin(){
+    ensureAudio();
+    if(state.mode === 'bet' && !state.wallet.pick){
+      toast('Pick Heads or Tails before tossing');
+      return;
+    }
+    if(state.mode === 'bet'){
+      const bet = parseInt($('#bet-amount').value,10) || 0;
+      if(bet <= 0 || bet > state.wallet.coins){
+        toast('Enter a valid bet within your wallet balance');
+        return;
+      }
+    }
+    if(state.mode === 'duel' && !state.duel.active){
+      toast('Match over — reset to play again');
+      return;
+    }
+
+    tossBtn.disabled = true;
+    statusEl.innerText = '';
+    coin.classList.remove('animate-heads','animate-tails');
+    void coin.offsetWidth;
+
+    const isHeads = Math.random() < 0.5;
+    const spinVariance = 720 + Math.floor(Math.random()*720);
+    const duration = 1.7 + Math.random()*0.6;
+    coin.style.setProperty('--spin', spinVariance + 'deg');
+    coin.style.setProperty('--dur', duration + 's');
+
+    playWhoosh(duration);
+    coin.classList.add(isHeads ? 'animate-heads' : 'animate-tails');
+
+    setTimeout(()=>{
+      tossBtn.disabled = false;
+      playDing();
+      if(navigator.vibrate && state.settings.vibrate) navigator.vibrate(isHeads ? [40] : [20,30,20]);
+
+      const resultChar = isHeads ? 'H' : 'T';
+      recordResult(resultChar);
+
+      const heads1 = getComputedStyle(body).getPropertyValue('--heads-1').trim() || '#FFD700';
+      const tails1 = getComputedStyle(body).getPropertyValue('--tails-1').trim() || '#00d4ff';
+      burstParticles(heads1, tails1);
+
+      if(isHeads){
+        statusEl.innerText = 'WINNER: HEADS';
+        statusEl.style.color = heads1;
+      } else {
+        statusEl.innerText = 'WINNER: TAILS';
+        statusEl.style.color = tails1;
+      }
+
+      handleModeOutcome(resultChar);
+      saveState();
+    }, duration*1000);
+  }
+
+  function recordResult(r){
+    state.stats.total++;
+    if(r==='H') state.stats.heads++; else state.stats.tails++;
+    state.stats.history.push(r);
+    if(state.stats.history.length > 200) state.stats.history = state.stats.history.slice(-200);
+    if(state.stats.streakType === r) state.stats.streakCount++;
+    else { state.stats.streakType = r; state.stats.streakCount = 1; }
+    if(state.stats.streakCount >= 3) playChime();
+  }
+
+  function handleModeOutcome(r){
+    if(state.mode === 'duel'){
+      if(r==='H') state.duel.p1++; else state.duel.p2++;
+      const winsNeeded = Math.ceil(state.duel.length/2);
+      if(state.duel.p1 >= winsNeeded || state.duel.p2 >= winsNeeded){
+        state.duel.active = false;
+        toast((state.duel.p1 > state.duel.p2 ? 'Player 1' : 'Player 2') + ' wins the match! 🏆');
+      } else {
+        state.duel.round++;
+      }
+      renderDuel();
+    }
+    if(state.mode === 'bet'){
+      const bet = parseInt($('#bet-amount').value,10) || 0;
+      const won = state.wallet.pick === r;
+      state.wallet.coins += won ? bet : -bet;
+      if(state.wallet.coins < 0) state.wallet.coins = 0;
+      toast(won ? `You won 🪙 ${bet}!` : `You lost 🪙 ${bet}.`);
+      renderWallet();
+      if(state.wallet.coins === 0) toast('Wallet empty — reset it in the Betting panel');
+    }
+  }
+
+  function init(){
+    applyTheme(state.settings.theme);
+    $('#toggle-sound').checked = state.settings.sound;
+    $('#toggle-vibrate').checked = state.settings.vibrate;
+    $('#toggle-particles').checked = state.settings.particles;
+    $('#toggle-ads').checked = state.settings.adsHidden;
+    $('#ad-wrap').style.display = state.settings.adsHidden ? 'none' : '';
+    document.querySelectorAll('.rail.right button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.mode === state.mode);
+    });
+    if(state.wallet.pick) setPick(state.wallet.pick);
+    $('#bet-amount').value = state.wallet.lastBet || 50;
+    updateModePanels();
+
+    buildSkinGrid();
+    const savedSkin = SKIN_LIST.find(s=> s.id === state.settings.coinSkin);
+    body.setAttribute('data-skin', state.settings.coinSkin || 'default');
+    if(savedSkin && savedSkin.id !== 'default'){
+      $('#heads-sub').textContent = savedSkin.emoji;
+      $('#tails-sub').textContent = savedSkin.emoji;
+    }
+
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('sw.js').catch(()=>{});
+    }
+  }
+  init();
+
+  window.addEventListener('beforeunload', ()=>{
+    state.wallet.lastBet = parseInt($('#bet-amount').value,10) || state.wallet.lastBet;
+    saveState();
+  });
+})();
+</script>
 </body>
 </html>
