@@ -1,11 +1,11 @@
 /* TEAM */
-Creator: Rafid Mondal (Raxzen)
+Creator: Raxzen
 Site: https://toss-heads-or-tails.raxzen.in/
 Contact: radidmondal@gmail.com
 Telegram: https://t.me/rafidmondal
-Location: West Bengal, India
+Location: India
 
 /* SITE */
-Last update: 2026-11-20
+Last update: This month
 Language: English
 Standards: HTML5, CSS3, ES6+, JSON-LD, Open Graph, PWA
