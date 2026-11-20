@@ -1,0 +1,19 @@
+{
+  "name": "Heads or Tails - Online Coin Toss",
+  "short_name": "Heads or Tails",
+  "description": "Free 3D online coin flip and heads or tails toss game with duel mode, stats, and 4 coin skins.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070b14",
+  "theme_color": "#00f5d4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

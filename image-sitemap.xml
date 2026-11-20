@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://toss-heads-or-tails.raxzen.in/</loc>
+    <image:image>
+      <image:loc>https://toss-heads-or-tails.raxzen.in/og-image.png</image:loc>
+      <image:title>Heads or Tails Online 3D Coin Toss Game</image:title>
+      <image:caption>Flip a coin online with Heads or Tails 3D random coin toss simulator by Raxzen</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://toss-heads-or-tails.raxzen.in/images/coin-neon.png</image:loc>
+      <image:title>Neon Coin Skin - Heads or Tails Online</image:title>
+      <image:caption>Glowing neon heads or tails coin design for online coin flip</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://toss-heads-or-tails.raxzen.in/images/coin-classic.png</image:loc>
+      <image:title>Classic Gold Coin Skin - Heads or Tails Toss</image:title>
+      <image:caption>Classic metallic gold coin for head or tail online toss</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://toss-heads-or-tails.raxzen.in/images/coin-glass.png</image:loc>
+      <image:title>Glass Coin Skin - 3D Coin Flipper</image:title>
+      <image:caption>Translucent glass coin design for online coin toss game</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://toss-heads-or-tails.raxzen.in/images/coin-rupee.png</image:loc>
+      <image:title>Indian Rupee Coin Skin - Cricket &amp; Kata Chapa Toss</image:title>
+      <image:caption>Indian Rupee style coin for online cricket toss and head ya tail</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://toss-heads-or-tails.raxzen.in/favicon.png</image:loc>
+      <image:title>Heads or Tails App Icon</image:title>
+      <image:caption>Official icon for Heads or Tails online coin toss game</image:caption>
+    </image:image>
+  </url>
+</urlset>

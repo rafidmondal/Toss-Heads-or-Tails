@@ -1,0 +1,24 @@
+# Heads or Tails — Online Coin Toss Game (Raxzen)
+
+> Free, instant 3D online coin flip and heads or tails toss game at https://toss-heads-or-tails.raxzen.in/
+
+## Overview
+Heads or Tails by Raxzen is a fast, mobile-friendly browser tool and game for making fair 50/50 random decisions. It supports single flips, cricket tosses (head or tail / kata chapa / head ya tail), classroom activities, and multiplayer duels.
+
+## Key Features
+- **Instant 3D Coin Flip**: Smooth 3D coin spin with sound effects, haptic vibration, and particle burst.
+- **Fair 50/50 Randomness**: Unbiased random outcome generation for every toss.
+- **2-Player Duel Mode**: Best of 3, Best of 5, and Best of 7 head-to-head rounds.
+- **Virtual Betting Mode**: Risk-free virtual coin wallet (1,000 starting coins) with Double or Nothing.
+- **Live Statistics & Streak Tracker**: Tracks total tosses, Heads %, Tails %, current streak, and last 20 results.
+- **4 Coin Skins & Themes**: Neon, Classic, Glass, and Indian Rupee (₹) coin styles.
+
+## Canonical Pages
+- [Home / Coin Toss Game](https://toss-heads-or-tails.raxzen.in/): Main interactive 3D heads or tails coin flipper.
+- [About & Fairness](https://toss-heads-or-tails.raxzen.in/about.html): How the coin toss works, use cases, and creator info.
+- [Privacy Policy](https://toss-heads-or-tails.raxzen.in/privacy.html): Local storage, analytics, and ad privacy details.
+
+## Technical & Discovery
+- [Sitemap](https://toss-heads-or-tails.raxzen.in/sitemap.xml)
+- [Image Sitemap](https://toss-heads-or-tails.raxzen.in/image-sitemap.xml)
+- [RSS Feed](https://toss-heads-or-tails.raxzen.in/feed.xml)

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Heads or Tails — Online Coin Toss Game by Raxzen</title>
+    <link>https://toss-heads-or-tails.raxzen.in/</link>
+    <description>Updates, features, and guides for the free 3D Heads or Tails online coin toss game.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Nov 2026 11:00:00 +0000</lastBuildDate>
+    <atom:link href="https://toss-heads-or-tails.raxzen.in/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3D Heads or Tails Coin Toss with Duel Mode, Rupee Skin &amp; Streak Stats</title>
+      <link>https://toss-heads-or-tails.raxzen.in/</link>
+      <guid isPermaLink="true">https://toss-heads-or-tails.raxzen.in/</guid>
+      <pubDate>Fri, 20 Nov 2026 11:00:00 +0000</pubDate>
+      <description>Flip a fair 50/50 coin online with 3D animation, Best-of-3/5/7 2-player duel, virtual betting, and 4 coin skins including Neon, Classic, Glass, and Rupee.</description>
+    </item>
+  </channel>
+</rss>
